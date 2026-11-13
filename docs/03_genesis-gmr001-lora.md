@@ -65,3 +65,15 @@
 ## 반복된 판단
 
 결과가 나쁠 때 설정보다 데이터를 먼저 의심했고, 비교할 때는 변수 하나만 바꿨습니다.
+
+## Civitai에 공개한 모델
+
+| 모델 | 베이스 | 버전 | 게시일 | 학습 설정 | 비고 |
+|---|---|---|---|---|---|
+| [Genesis GMR-001 (Flux.2-Klein)](https://civitai.com/models/2594702/genesis-gmr-001-flux2-klein?modelVersionId=2914732) | Flux.2 Klein 4B-base | V1 | 2026.05.04 | 1,080 스텝, 20 에포크 | 파일 88.15MB |
+| [gmr](https://civitai.com/models/2298383/gmr) | Flux.1 Dev | V1 | 2026.01.11 | 270 스텝, 5 에포크 | 파일 18.37MB |
+| [genesis gt](https://civitai.com/models/2298508/genesis-gt) | Flux.1 Dev | V1 | 2026.01.13 | 1,800 스텝, 10 에포크 | 트리거 `genesisgt`, Magma GT 대상, 파일 292.25MB |
+
+- Civitai 게시 페이지에서 확인한 값입니다. 학습 이미지 수와 상세 사용법은 페이지에 적혀 있지 않습니다.
+- 게시된 모델은 Flux.1 Dev(1월)와 Flux.2 Klein 4B-base(5월)입니다. 베이스 모델 비교에서 채택한 Z-Image Turbo용 LoRA는 위 목록에 없습니다.
+- Flux.1 Dev 기반 두 모델은 FLUX.1 [dev] 비상업적 라이선스를 따릅니다.
