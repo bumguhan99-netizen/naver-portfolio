@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한범구 포트폴리오</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* layout: 좁은 본문 열 하나, 섹션 머리는 중계 자막 바처럼, 수치는 고정폭 숫자 */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --ink:#15212b; --muted:#59666f; --line:#d6dce1;
+  --navy:#1e2d5f; --accent:#03a04a; --accent-soft:#e4f7ec; --caption-bg:#1e2d5f; --caption-ink:#f3f5f7;
+  --fix:#03a04a; --brk:#1e2d5f; --warn:#3d4f86; --warn-soft:#e8ecf6;
+  --font-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1317; --surface:#151c22; --ink:#e4e9ed; --muted:#9aa6b0; --line:#2b353d;
+    --navy:#9fb0e0; --accent:#2fd277; --accent-soft:#1b2a3d; --caption-bg:#e4e9ed; --caption-ink:#0e1317;
+    --fix:#2fd277; --brk:#8fa6f0; --warn:#9fb0e0; --warn-soft:#1b2342;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1317; --surface:#151c22; --ink:#e4e9ed; --muted:#9aa6b0; --line:#2b353d;
+  --navy:#9fb0e0; --accent:#2fd277; --accent-soft:#1b2a3d; --caption-bg:#e4e9ed; --caption-ink:#0e1317;
+  --fix:#2fd277; --brk:#8fa6f0; --warn:#9fb0e0; --warn-soft:#1b2342;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{text-wrap:balance;line-height:1.3;margin:0}
+h1{font-size:2.1rem;font-weight:700;letter-spacing:-0.01em}
+h2{font-size:1.5rem;font-weight:700}
+h3{font-size:1.1rem;font-weight:700}
+p{margin:0;max-width:68ch}
+.num,td.n,th.n{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:.875rem}
+
+/* header */
+header{padding:48px 0 32px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:.85rem;color:var(--muted);margin-bottom:10px}
+.lede{font-size:1.1rem;margin-top:14px}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{font-size:.8rem;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--muted);background:var(--surface)}
+.toch{font-size:.85rem;color:var(--muted);font-family:var(--font-mono);margin-bottom:4px}
+nav.toc{display:grid;gap:2px;margin-top:0;font-size:1.05rem}
+nav.toc a{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);text-decoration:none;font-weight:500;color:var(--navy)}
+nav.toc a span{font-family:var(--font-mono);color:var(--navy);font-weight:700}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.tile .big{font-family:var(--font-mono);font-size:1.45rem;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tile p{font-size:.88rem;color:var(--muted);margin-top:6px}
+
+nav.toc a{text-decoration:none}
+nav.toc a:hover{text-decoration:underline}
+
+/* sections */
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+.caption{display:inline-block;background:var(--caption-bg);color:var(--caption-ink);font-size:.8rem;padding:2px 10px;border-radius:3px;margin-bottom:12px;font-family:var(--font-mono)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:.88rem;color:var(--muted)}
+.block{margin-top:30px;display:grid;gap:12px}
+.status{display:inline-block;font-size:.8rem;padding:2px 10px;border-radius:999px;background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn);margin-top:10px}
+.note{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 16px;border-radius:0 6px 6px 0}
+.note p{max-width:none}
+.limit{border-left:3px solid var(--warn);background:var(--warn-soft);padding:12px 16px;border-radius:0 6px 6px 0}
+ul.clean{margin:0;padding-left:1.2em;display:grid;gap:4px}
+ul.clean li{max-width:70ch}
+
+/* tables */
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:.82rem;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;white-space:nowrap}
+.tag{font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.tag.keep{color:var(--fix)} .tag.hold{color:var(--warn)} .tag.drop{color:var(--brk)} .tag.cand{color:var(--accent)}
+
+/* diverging chart */
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.chart-legend{display:flex;gap:18px;font-size:.82rem;color:var(--muted);margin-bottom:10px;flex-wrap:wrap}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.row{display:grid;grid-template-columns:minmax(0,13.5rem) 1fr 1fr 3rem;align-items:center;gap:0 8px;padding:5px 0;border-bottom:1px dashed var(--line);font-size:.85rem}
+.row:last-of-type{border-bottom:0}
+.row .lab{line-height:1.35}
+.half{position:relative;height:16px}
+.half.l{border-right:1px solid var(--muted)}
+.bar{position:absolute;top:2px;height:12px;border-radius:2px;font-family:var(--font-mono);font-size:.72rem;line-height:12px;color:var(--surface);padding:0 4px;white-space:nowrap}
+.half.l .bar{right:0;background:var(--brk);text-align:left}
+.half.r .bar{left:0;background:var(--fix);text-align:right}
+.row .net{font-family:var(--font-mono);text-align:right;font-variant-numeric:tabular-nums}
+.axis{display:grid;grid-template-columns:minmax(0,13.5rem) 1fr 1fr 3rem;gap:0 8px;font-family:var(--font-mono);font-size:.72rem;color:var(--muted);margin-top:4px}
+.axis span:nth-child(2){text-align:left} .axis span:nth-child(3){text-align:right}
+
+/* small bars */
+.hbars{display:grid;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.hb{display:grid;grid-template-columns:minmax(0,11rem) 1fr 3.2rem;gap:10px;align-items:center;font-size:.85rem}
+.track{height:14px;background:var(--bg);border-radius:2px;position:relative}
+.fill{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:2px}
+.fill.alt{background:var(--muted)}
+.hb .v{font-family:var(--font-mono);text-align:right}
+
+/* pipeline */
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:stretch}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;font-size:.84rem;line-height:1.5;position:relative}
+.step b{display:block;font-size:.78rem;color:var(--muted);font-weight:500;margin-bottom:4px;font-family:var(--font-mono)}
+.step:not(:last-child)::after{content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.9rem}
+
+/* cards */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;display:grid;gap:8px;align-content:start}
+.card h3{font-size:1rem}
+.card p{font-size:.92rem}
+
+/* subtitle example */
+.sub{display:grid;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-size:.9rem}
+.sub div{display:grid;grid-template-columns:3.5rem 1fr minmax(0,16rem);gap:10px}
+.sub span:first-child{color:var(--muted);font-family:var(--font-mono);font-size:.8rem}
+.sub .q{color:var(--muted);font-size:.85rem}
+
+ol.principles{margin:0;padding-left:1.4em;display:grid;gap:10px}
+ol.principles li{max-width:72ch}
+ol.principles b{display:block}
+footer{padding:32px 0 56px;font-size:.85rem;color:var(--muted)}
+footer p{max-width:80ch}
+
+/* 01 hierarchy */
+#vqa2{counter-reset:k}
+#vqa2 .desc{font-size:.92rem;color:var(--muted);margin-top:10px}
+#vqa2 .lede{font-size:1.25rem;font-weight:700;margin-top:22px;line-height:1.5}
+.keys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+.key{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.key .kn{font-family:var(--font-mono);font-size:1.9rem;font-weight:500;line-height:1.2;white-space:nowrap}
+.key .kt{font-weight:700;margin-top:6px}
+.key p{font-size:.85rem;color:var(--muted);margin-top:4px}
+
+#vqa2 > .block{margin-top:44px}
+#vqa2 > .block > h3{counter-increment:k;font-size:1.2rem;border-left:4px solid var(--accent);padding-left:12px}
+#vqa2 > .block > h3::before{content:counter(k) ". ";font-family:var(--font-mono);color:var(--accent)}
+#vqa2 > .block.minor > h3{font-size:1rem;color:var(--muted);border-left-color:var(--line)}
+#vqa2 > .block.minor > h3::before{color:var(--muted)}
+details.more{border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+details.more summary{cursor:pointer;padding:10px 14px;font-size:.9rem;color:var(--accent);font-weight:500}
+details.more .tscroll{border:0;border-top:1px solid var(--line);border-radius:0}
+@media (max-width:720px){.keys{grid-template-columns:1fr}}
+
+@media (max-width:720px){
+  h1{font-size:1.7rem}
+  .tiles,.grid2{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr}
+  .step:not(:last-child)::after{content:"↓";right:50%;top:auto;bottom:-14px;transform:translateX(50%)}
+  .row,.axis{grid-template-columns:minmax(0,8.5rem) 1fr 1fr 2.4rem}
+  .hb{grid-template-columns:minmax(0,7.5rem) 1fr 2.8rem}
+  .sub div{grid-template-columns:3rem 1fr}
+  .sub .q{grid-column:2}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.mdl{display:block;margin-top:6px}.mdl em{display:block;font-style:normal;font-weight:700}
+.step .stepnum{font-weight:700}
+.badge{font-style:normal;font-size:.7rem;background:var(--accent);color:var(--surface);padding:0 6px;border-radius:999px;margin-left:4px}
+.step.hl{border-color:var(--accent);background:var(--accent-soft)}
+.mdl{display:block;margin-top:6px}
+.chart,.hbars{max-width:780px;margin-left:auto;margin-right:auto;width:100%}
+.diagram{display:grid;gap:12px;justify-items:center}.diagram .tscroll{width:100%;max-width:900px}.diagram .flow{width:100%}
+.flow.flow4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.stepnum{display:block;font-family:var(--font-mono);font-size:1.6rem;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:4px}
+@media (max-width:720px){.flow.flow4{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <nav class="toc" aria-label="목차">
+    <div class="toch">목차</div>
+    <a href="#vqa2"><span>01</span>SSAFY 2차 · 사진 속 글자를 읽어 답하는 VQA 모델 개선</a>
+    <a href="#vqa1"><span>02</span>SSAFY 1차 · 재활용품 사진 질문에 답하는 VQA 모델 개선</a>
+    <a href="#lora"><span>03</span>GMR-001 · 특정 차량 형태를 유지하는 이미지 LoRA 학습</a>
+    <a href="#method"><span>04</span>사용한 도구와 작업 원칙</a>
+  </nav>
+  <div class="tiles">
+    <div class="tile"><div class="big">627 → 650</div><p>SSAFY 2차 VQA 검증 673문항 정답 수</p></div>
+    <div class="tile"><div class="big">+7 = 15 − 8</div><p>해상도 상향의 순증가 7은 교정 15, 악화 8의 합</p></div>
+    <div class="tile"><div class="big">5,074 / 6,714</div><p>출력 검사를 통과한 test 입력 중 다른 대회 이미지를 바이트 대조로 발견 후 재추론</p></div>
+  </div>
+</header>
+
+<!-- 01 -->
+<section id="vqa2">
+  <span class="caption">01 · 사진 속 글자를 읽어 답하는 VQA 모델 개선</span>
+  <h2>SSAFY AI 챌린지 2차 · 화면 글자 VQA</h2>
+  <div class="meta"><span>2026.09.20 – 09.28</span><span>팀 4인</span><span>간판·가격표·메뉴 사진과 한국어 질문을 보고 a~d 중 정답 고르기</span></div>
+  <p class="desc">Qwen3-VL, Qwen3.5, Qwen3.8의 QLoRA 미세조정과 예측 결합.<br>담당: 가설, 비교 조건, 채택 기준, 결과 판정, 사람 검수</p>
+  <p class="lede" style="margin-top:12px">검증 정답 627개에서 650개로 상승.<br>화면 글자는 전부 입력보다 필요한 영역만 제시할 때 효과 우세</p>
+
+  <div class="keys">
+    <div class="key good"><div class="kn">627 → 650</div><div class="kt">검증 정답 수</div><p>최종 결합, 기존 결합 대비 교정 7 · 악화 0</p></div>
+    <div class="key"><div class="kn"><span style="color:var(--brk)">−1</span> vs <span style="color:var(--fix)">+3</span></div><div class="kt">전부 입력 vs 필요한 영역만</div><p>9B 기준 OCR 전량 주입은 감소, 글자 영역 확대는 증가</p></div>
+    <div class="key bad"><div class="kn">2건</div><div class="kt">에이전트 실행 오류 적발</div><p>잘못된 비율 실행, 다른 대회 이미지 5,074장</p></div>
+  </div>
+  <div class="block minor">
+    <h3>같은 문항, 같은 기준으로 모든 실험 판정</h3>
+    <ul class="clean">
+      <li>학습 <b>6,041문항</b>, 검증 <b>673문항</b> 고정 (seed 42)</li>
+      <li>교정(오답→정답)과 악화(정답→오답)를 따로 집계</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>OCR 글자 전부 입력 시 감소, 관련 영역만 제시 시 증가</h3>
+    <div class="grid2">
+      <div class="card"><p class="small"><b>OCR 문자열 전량 주입</b></p><p class="num" style="font-size:1.15rem;font-weight:700;color:var(--brk)">8B 634 → 633 · 9B 640 → 639</p><p class="small">화면 <b>전체</b>의 글자를 모두 입력</p></div>
+      <div class="card"><p class="small"><b>글자·객체 영역만 확대해 함께 입력</b></p><p class="num" style="font-size:1.15rem;font-weight:700;color:var(--fix)">9B 640 → 643 · 640 → 642</p><p class="small">질문 대상이 있는 <b>영역만</b> 제시</p></div>
+    </div>
+    <details class="more"><summary>실험 10건 전체 표 보기</summary>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>모델</th><th>바꾼 조건</th><th class="n">정답 수</th><th class="n">교정 / 악화</th><th>판정</th></tr></thead>
+        <tbody>
+          <tr><td>8B</td><td>입력 해상도 524,288 → 786,432 px</td><td class="n">627 → 634</td><td class="n">15 / 8</td><td><span class="tag keep">유지</span></td></tr>
+          <tr><td>8B</td><td>기본 해상도 + OCR 문자열 주입 (PP-OCRv5)</td><td class="n">627 → 630</td><td class="n">–</td><td><span class="tag hold">보류</span></td></tr>
+          <tr><td>8B</td><td>고해상도 + OCR 문자열 주입</td><td class="n">634 → 633</td><td class="n">2 / 3</td><td><span class="tag drop">근거 없음</span></td></tr>
+          <tr><td>9B</td><td>고해상도 (실제 입력 grid가 바뀐 문항 95개)</td><td class="n">640 → 640</td><td class="n">–</td><td><span class="tag drop">대체 근거 없음</span></td></tr>
+          <tr><td>9B</td><td>OCR 전량 주입 (GLM-OCR)</td><td class="n">640 → 639</td><td class="n">–</td><td><span class="tag drop">미채택</span></td></tr>
+          <tr><td>9B</td><td>글자 영역만 확대해 함께 입력 (PP-OCRv5 검출)</td><td class="n">640 → 643</td><td class="n">4 / 1</td><td><span class="tag cand">비교 후보</span></td></tr>
+          <tr><td>9B</td><td>글자 영역 확대 + 그 영역의 OCR 문자열</td><td class="n">640 → 643</td><td class="n">글자 영역 대비 1 / 1</td><td><span class="tag cand">비교 후보</span></td></tr>
+          <tr><td>9B</td><td>질문 관련 객체 영역 확대 (YOLO-World)</td><td class="n">640 → 642</td><td class="n">2 / 0</td><td><span class="tag keep">보존</span></td></tr>
+          <tr><td>9B</td><td>객체 영역 + SAM2.1 윤곽 보정</td><td class="n">642</td><td class="n">YOLO와 답 동일</td><td><span class="tag drop">추가 이득 없음</span></td></tr>
+          <tr><td>9B</td><td>짧은 근거 출력 후 답 (호출 시간 13.06 → 51.32분)</td><td class="n">639 → 642</td><td class="n">6 / 3</td><td><span class="tag hold">비용 보류</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    </details>
+  </div>
+
+  <div class="block">
+    <h3>총점이 같아도 달랐던 교정 문항과 악화 문항</h3>
+    <div class="chart" role="img" aria-label="실험별 교정과 악화 문항 수 막대 그래프">
+      <div class="chart-legend"><span><span class="sw" style="background:var(--brk)"></span>악화 (정답→오답)</span><span><span class="sw" style="background:var(--fix)"></span>교정 (오답→정답)</span><span>끝 숫자: 순변화</span></div>
+      <div id="dchart"></div>
+      <div class="axis"><span></span><span>15 ←</span><span>→ 15</span><span></span></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>OCR, 검출, VLM의 모듈 연결</h3>
+    <div class="diagram">
+    <div class="tscroll"><svg viewBox="0 0 900 270" role="img" aria-label="입력에서 영역 찾기, 글자 읽기, 판단, 선택으로 이어지는 처리 흐름" style="min-width:760px;width:100%;display:block">
+      <style>
+        .sg{fill:var(--bg);stroke:var(--line)} .sg.hl{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2} .hlt{fill:var(--accent);font-weight:700} .lg{font:400 12px var(--font-body);fill:var(--muted)} .sl{font:500 12px var(--font-mono);fill:var(--muted)}
+        .mb{fill:var(--surface);stroke:var(--line)} .mb.st{stroke:var(--accent);stroke-width:2}
+        .mt{font:700 13px var(--font-body);fill:var(--ink)} .ms{font:400 11.5px var(--font-body);fill:var(--muted)}
+        .ar{stroke:var(--muted);stroke-width:1.6;fill:none} .ah{stroke:var(--muted);stroke-width:1.6;fill:none}
+      </style>
+      <rect x="8" y="38" width="150" height="222" rx="8" class="sg"/><text x="20" y="28" class="sl">1 입력</text><rect x="18" y="56" width="130" height="56" rx="6" class="mb"/><text x="28" y="76" class="mt">원본 이미지</text><text x="28" y="94" class="ms">화면 사진</text><rect x="18" y="122" width="130" height="56" rx="6" class="mb"/><text x="28" y="142" class="mt">한국어 질문</text><rect x="18" y="188" width="130" height="56" rx="6" class="mb"/><text x="28" y="208" class="mt">보기 a~d</text>
+      <path d="M158 150 H178" class="ar"/><path d="M178 145 L184 150 L178 155" class="ah"/>
+      <rect x="184" y="38" width="206" height="222" rx="8" class="sg hl"/><text x="196" y="28" class="sl hlt">2 영역 찾기 · 보완</text><rect x="194" y="56" width="186" height="62" rx="6" class="mb"/><text x="204" y="76" class="mt">PP-OCRv5</text><text x="204" y="94" class="ms">글자 영역 검출</text><rect x="194" y="126" width="186" height="62" rx="6" class="mb"/><text x="204" y="146" class="mt">YOLO-World</text><text x="204" y="164" class="ms">간판·메뉴판 등 객체 검출</text><rect x="194" y="196" width="186" height="56" rx="6" class="mb"/><text x="204" y="216" class="mt">SAM2.1</text><text x="204" y="234" class="ms">객체 윤곽 분할</text>
+      <path d="M390 150 H410" class="ar"/><path d="M410 145 L416 150 L410 155" class="ah"/>
+      <rect x="416" y="38" width="160" height="222" rx="8" class="sg hl"/><text x="428" y="28" class="sl hlt">3 글자 읽기 · 보완</text><rect x="426" y="70" width="140" height="70" rx="6" class="mb"/><text x="436" y="90" class="mt">GLM-OCR</text><text x="436" y="108" class="ms">crop 글자 인식</text><rect x="426" y="152" width="140" height="70" rx="6" class="mb"/><text x="436" y="172" class="mt">캐시</text><text x="436" y="190" class="ms">이미지 hash 기준</text>
+      <path d="M576 150 H596" class="ar"/><path d="M596 145 L602 150 L596 155" class="ah"/>
+      <rect x="602" y="38" width="150" height="222" rx="8" class="sg"/><text x="614" y="28" class="sl">4 판단</text><rect x="612" y="90" width="130" height="120" rx="6" class="mb st"/><text x="622" y="110" class="mt">Qwen3.5-9B</text><text x="622" y="128" class="ms">원본, crop,</text><text x="622" y="144" class="ms">OCR 문자열을</text><text x="622" y="160" class="ms">함께 보고 판단</text>
+      <path d="M762 150 H782" class="ar"/><path d="M782 145 L788 150 L782 155" class="ah"/>
+      <rect x="788" y="38" width="104" height="222" rx="8" class="sg"/><text x="800" y="28" class="sl">5 선택</text><rect x="796" y="70" width="88" height="70" rx="6" class="mb"/><text x="806" y="90" class="mt">첫 토큰</text><text x="806" y="108" class="ms">logits</text><rect x="796" y="152" width="88" height="70" rx="6" class="mb"/><text x="806" y="172" class="mt">확률 결합</text><text x="806" y="190" class="ms">모델 간</text>
+    </svg></div>
+    <div class="flow">
+      <div class="step"><b>입력</b>원본 이미지 + 한국어 질문 + 보기 a~d</div>
+      <div class="step hl"><b>영역 찾기 <i class="badge">보완</i></b><span class="mdl"><em>PP-OCRv5</em>글자 영역 검출</span><span class="mdl"><em>YOLO-World</em>간판·메뉴판 등 객체 검출</span><span class="mdl"><em>SAM2.1</em>객체 윤곽 분할</span></div>
+      <div class="step hl"><b>글자 읽기 <i class="badge">보완</i></b><span class="mdl"><em>GLM-OCR</em>crop한 영역의 글자 인식</span><span class="mdl"><em>캐시</em>이미지 hash 기준으로 결과 저장</span></div>
+      <div class="step"><b>판단</b><span class="mdl"><em>Qwen3.5-9B</em>원본, crop, OCR 문자열을 함께 보고 답 판단</span></div>
+      <div class="step"><b>선택</b><span class="mdl"><em>첫 토큰 logits</em>보기 a~d 중 하나 선택</span><span class="mdl"><em>확률 결합</em>여러 모델의 확률을 합쳐 최종 답 결정</span></div>
+    </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>외국어 장면에서 고해상도만 개선, YOLO는 오히려 하락</h3>
+    <div class="hbars" role="img" aria-label="외국어 진단 39건의 입력 방식별 문자열 일치 수">
+      <div class="hb"><span>기본 입력</span><div class="track"><div class="fill alt" style="width:59%"></div></div><span class="v">23/39</span></div>
+      <div class="hb"><span>고해상도</span><div class="track"><div class="fill" style="width:66.7%"></div></div><span class="v">26/39</span></div>
+      <div class="hb"><span>글자 영역 확대</span><div class="track"><div class="fill" style="width:64.1%"></div></div><span class="v">25/39</span></div>
+      <div class="hb"><span>OCR 문자열 주입</span><div class="track"><div class="fill alt" style="width:59%"></div></div><span class="v">23/39</span></div>
+      <div class="hb"><span>YOLO / SAM 객체 영역</span><div class="track"><div class="fill alt" style="width:56.4%"></div></div><span class="v">22/39</span></div>
+    </div>
+    <ul class="clean">
+      <li>팀 내 중국어·일본어·태국어·베트남어 해독 인력 부재로 새 라벨 제작 불가. 대안으로 공식 원어 QA(MTVQA, EST-VQA, VinText) 보조 학습, 학습과 분리한 <b>39건</b>으로 진단 (값은 공식 답과의 문자열 일치 수)</li>
+      <li>YOLO는 <b>39장 중 22장</b>에서 상자 미검출, 외국어 경로에는 미적용</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>에이전트 결과를 그대로 믿지 않아 적발한 두 번의 오류</h3>
+    <div class="grid2">
+      <div class="card">
+        <h3>15%를 15개로 실행 → 올바른 비율로 재실행</h3>
+        <p>외부 데이터를 15%, 30% 섞으라는 요청을 에이전트가 <b>15개, 30개</b>(실제 9.375%, 18.75%)로 실행</p>
+        <p class="muted">그 결과는 보존, <b>실제 15%·30%로 재실행</b></p>
+      </div>
+      <div class="card">
+        <h3>출력은 정상, 입력은 다른 대회 것 → 5,074장 재추론</h3>
+        <p>마감 당일 출력 개수·ID·해시는 모두 일치, 원본 SHA256 대조에서 test 6,714장 중 <b>5,074장이 다른 대회 이미지</b>로 확인</p>
+        <p class="muted">정상 1,640장은 재사용, <b>5,074장만</b> 같은 설정으로 재추론</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>라벨의 사람 확인, 자동 수정 0건</h3>
+    <div class="flow flow4">
+      <div class="step"><b>의심문항 선별</b><span class="stepnum">85</span><strong>손상 의심</strong> 문항 (오류 확정 아님)</div>
+      <div class="step"><b>의심문항 검수</b><span class="stepnum">120</span>정답과 모델 답을 가리고 직접 검수, <strong>입력 문제 18건</strong> 발견</div>
+      <div class="step"><b>의심문항 더블체크</b><span class="stepnum">47</span>엇갈린 문항 독립 재검수, 검수자 간 <strong>불일치 5건</strong></div>
+      <div class="step"><b>결과</b><span class="stepnum">0</span><strong>자동 라벨 수정</strong>. 원래 정답과 분모 673 유지</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- 02 -->
+<section id="vqa1">
+  <span class="caption">02 · 재활용품 사진 질문에 답하는 VQA 모델 개선</span>
+  <h2>SSAFY AI 챌린지 1차 · 재활용 이미지 VQA</h2>
+  <div class="meta"><span>재활용품 사진의 개수·재질·색상·종류를 묻는 4지선다</span></div>
+  <p class="lede" style="margin-top:12px">학습 버그와 답 선택 방식 수정, 일반화 우선 전략으로<br>Public 20위에서 Private 7위로 상승</p>
+  <div class="block">
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>바꾼 것</th><th>이유 → 결과</th></tr></thead>
+        <tbody>
+          <tr><td>학습 손실 범위</td><td>라벨 마스킹 부재로 프롬프트 전체에 loss 적용 → 정답 토큰에만 적용하도록 수정</td></tr>
+          <tr><td>답 선택 방식</td><td>생성 후 파싱 시 실패 발생 → a/b/c/d 첫 토큰 logits 비교로 파싱 실패 제거</td></tr>
+          <tr><td>입력 해상도</td><td>입력 해상도 상향 → 검증 정확도 0.7233 → 0.7600</td></tr>
+          <tr><td>모델과 보기 순서</td><td>Qwen2.5-VL-3B QLoRA → Qwen3-VL-8B LoRA로 교체, 보기 순서 섞기와 4가지 순서 투표</td></tr>
+          <tr><td>학습 방향</td><td>내부 점수와 공개 점수의 차이 → 반복 학습 대신 과적합 점검과 공공데이터 보강</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section id="lora">
+  <span class="caption">03 · 특정 차량 형태를 유지하는 이미지 LoRA 학습</span>
+  <h2>제네시스 GMR-001 이미지 LoRA</h2>
+  <div class="meta"><span>2026.01 – 05</span><span>AI 광고 영상에서 특정 차량 형태를 컷마다 유지하기 위해 시작</span><span>제조사 프로젝트 아님</span></div>
+  <p class="lede" style="margin-top:12px">결과 붕괴의 원인은 학습 설정이 아닌 데이터,<br>데이터 재구성 후 같은 조건 비교로 베이스 모델 선정</p>
+  <div class="block">
+    <div class="grid2">
+      <div class="card">
+        <h3>V1 · 일관성 붕괴로 폐기</h3>
+        <p>유튜브 캡처 20장, 3개 이하 각도 → 생성마다 헤드램프와 차체 형태 변동</p>
+        <p class="muted">학습 설정보다 데이터 구성 문제로 판단, 모델과 데이터셋 전부 폐기</p>
+      </div>
+      <div class="card">
+        <h3>V2 · 데이터 재구성</h3>
+        <p>공식 보도자료 30장, 각도 중복 없이 선별. 다른 차량이 절반 이상인 사진 제외</p>
+        <p class="muted">VLM 자동 캡션은 API 한도로 중단되어 나머지는 직접 작성, 30장 전부 검수. 바뀌면 안 되는 도장·램프·로고는 트리거 단어에 연결, 캡션에는 각도·배경·조명만 기재</p>
+      </div>
+    </div>
+    <div class="note"><p><b>Z-Image Turbo 채택.</b> 같은 데이터와 생성 조건(Step 10, CFG 1, LoRA 강도 1.10)에서 베이스 모델만 교체해 비교. 두 줄 램프는 둘 다 유지, Flux.2 Klein 4B는 원본 디테일, Z-Image Turbo는 배경·질감 프롬프트 반영이 우수. 수치 평가가 아닌 다섯 기준의 육안 비교</p></div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="method">
+  <span class="caption">04 · 사용한 도구와 작업 원칙</span>
+  <h2>도구와 일하는 방식</h2>
+  <p class="lede" style="margin-top:12px">총점보다 문항별 변화, 모델의 출력보다 입력과 원문을 먼저 확인</p>
+  <div class="block">
+    <div class="tscroll">
+      <table>
+        <tbody>
+          <tr><td>언어</td><td>Python, JavaScript, SQL</td></tr>
+          <tr><td>학습</td><td>PyTorch, Hugging Face Transformers, PEFT (LoRA, QLoRA), bitsandbytes</td></tr>
+          <tr><td>이미지 인식</td><td>Qwen3-VL / Qwen3.5 / Qwen3.8, PP-OCRv5, GLM-OCR, YOLO-World, SAM2.1</td></tr>
+          <tr><td>생성</td><td>ComfyUI, Flux, Z-Image LoRA</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+
+</div>
+<script>
+(function(){
+  var rows=[
+    ["8B 고해상도",15,8],
+    ["9B 글자 영역 확대",4,1],
+    ["9B 객체 영역 (YOLO)",2,0],
+    ["9B 짧은 근거 출력",6,3],
+    ["8B 고해상도 + OCR (고해상도 대비)",2,3],
+    ["27B 초기 학습 (학습 전 대비)",6,1],
+    ["9B 원본 추가 학습",0,2],
+    ["불일치 문항만 영역 확대",1,2],
+    ["9B 외국어 보강 학습",3,3],
+    ["27B 외국어 보강 학습",0,1],
+    ["최종 결합 650 (기존 결합 대비)",7,0]
+  ];
+  var max=15, host=document.getElementById("dchart");
+  if(!host) return;
+  rows.forEach(function(r){
+    var net=r[1]-r[2];
+    var el=document.createElement("div"); el.className="row";
+    var lw=(r[2]/max*100).toFixed(1), rw=(r[1]/max*100).toFixed(1);
+    el.innerHTML='<span class="lab"></span>'+
+      '<div class="half l">'+(r[2]?'<div class="bar" style="width:'+lw+'%">'+r[2]+'</div>':'')+'</div>'+
+      '<div class="half r">'+(r[1]?'<div class="bar" style="width:'+rw+'%">'+r[1]+'</div>':'')+'</div>'+
+      '<span class="net">'+(net>0?'+':'')+net+'</span>';
+    el.querySelector(".lab").textContent=r[0];
+    var n=el.querySelector(".net");
+    n.style.color= net>0 ? "var(--fix)" : (net<0 ? "var(--brk)" : "var(--muted)");
+    host.appendChild(el);
+  });
+})();
+</script>
+</body>
+</html>
