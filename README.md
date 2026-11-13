@@ -2,9 +2,9 @@
 
 NAVER 검색 플랫폼 음성번역 품질 평가·멀티모달 번역 연구 인턴 지원 포트폴리오
 
-**[웹페이지로 보기 → bumguhan99-netizen.github.io/naver-portfolio](https://bumguhan99-netizen.github.io/naver-portfolio/)**
+**[PDF로 보기 → naver.pdf](naver.pdf)**
 
-[![포트폴리오 미리보기](preview.png)](https://bumguhan99-netizen.github.io/naver-portfolio/)
+[![포트폴리오 미리보기](preview.png)](naver.pdf)
 
 ## 프로젝트
 
